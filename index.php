@@ -92,7 +92,7 @@
   
                         
                         <div class="ps-3 card-title-wrapper end">
-                            <div class="ps-3 card-title-wrapper span text-V">45</div>
+                            <div class="ps-3 card-title-wrapper span text-V">375</div>
                             <div class="ps-3 card-title-wrapper span text-normal ">
                                 <div class="status-box">
                                     Normal
@@ -118,7 +118,7 @@
   
                         
                         <div class="ps-3 card-title-wrapper end">
-                            <div class="ps-3 card-title-wrapper span text-V">45</div>
+                            <div class="ps-3 card-title-wrapper span text-V">145</div>
                             
                         </div>
                     </div>
