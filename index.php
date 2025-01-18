@@ -121,7 +121,7 @@
                         
                         <div class="ps-3 card-title-wrapper end">
                             <div class="ps-3 card-title-wrapper span text-V">
-                              <?php echo htmlspecialchars($row['Co2'] + 0); ?>
+                              <div id="Co2"></div>
                             </div>
                         </div>
                     </div>
@@ -144,7 +144,7 @@
                         
                         <div class="ps-3 card-title-wrapper end">
                             <div class="ps-3 card-title-wrapper span text-V">
-                            <?php echo htmlspecialchars($row['Tvoc'] + 0); ?>
+                              <div id="Tvoc"></div>
                             </div>
                             
                         </div>
