@@ -57,7 +57,7 @@ if ($conn->connect_error) {
 }
 
 // สร้างคำสั่ง SQL เพื่อดึงข้อมูลเฉพาะวันที่ปัจจุบัน
-$sql = "SELECT Co2, Tvoc FROM co2no_data WHERE DATE(created_at) = CURDATE()";
+$sql = "SELECT Co2, Tvoc FROM co2no_data WHERE DATE = CURDATE()";
 
 // ส่งคำสั่ง SQL ไปยังฐานข้อมูล
 $result = $conn->query($sql);
