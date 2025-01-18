@@ -30,6 +30,10 @@ if ($result->num_rows > 0) {
     $data['Co2'] = $row['Co2'];
     $data['Tvoc'] = $row['Tvoc'];
     $data['Date'] = $row['day']; // วันที่ (เปลี่ยนจาก 'DATE' เป็น 'day')
+    // ส่งข้อมูลกลับไปยังฝั่ง client
+    echo "Co2: " . htmlspecialchars($data['Co2']) . "<br>";
+    echo "Tvoc: " . htmlspecialchars($data['Tvoc']) . "<br>";
+    echo "วันที่: " . htmlspecialchars($data['Date']) . "<br>";
 } else {
     echo "ไม่พบข้อมูลในตาราง co2no_data สำหรับวันนี้";
 }
