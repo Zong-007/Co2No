@@ -120,9 +120,7 @@
   
                         
                         <div class="ps-3 card-title-wrapper end">
-                            <div class="ps-3 card-title-wrapper span text-V">
-                              <div id="Co2"></div>
-                            </div>
+                            <div id="Co2" class="ps-3 card-title-wrapper span text-V"></div>
                         </div>
                     </div>
                 </div>
