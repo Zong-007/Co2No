@@ -49,17 +49,31 @@
       $.ajax({
         url: 'sent_data/connect.php', // ไฟล์ PHP ที่ดึงข้อมูลจากฐานข้อมูล
         method: 'GET',
+        dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
         success: function(response) {
-          $('#data').html(response); // อัพเดตข้อมูลใน div ที่ id="data"
+          // ตรวจสอบว่ามีข้อมูลหรือไม่
+          if (response.error) {
+            $('#data').html(response.error); // ถ้ามีข้อผิดพลาดแสดงข้อความข้อผิดพลาด
+          } else {
+            // ถ้ามีข้อมูล, แสดงผล
+            $('#data').html(
+              "Co2: " + response.Co2 + "<br>" +
+              "Tvoc: " + response.Tvoc + "<br>" +
+              "วันที่: " + response.Date + "<br>"
+            );
           }
-        });
-      }
+        },
+        error: function() {
+          $('#data').html("เกิดข้อผิดพลาดในการดึงข้อมูล");
+        }
+      });
+    }
 
-      // เรียกใช้ฟังก์ชันทุกๆ 5 วินาที
-      setInterval(fetchData, 5000); // 5000 มิลลิวินาที = 5 วินาที
+    // เรียกใช้ฟังก์ชันทุกๆ 5 วินาที
+    setInterval(fetchData, 5000); // 5000 มิลลิวินาที = 5 วินาที
 
-      // เรียกใช้ครั้งแรกเมื่อโหลดหน้า
-      fetchData();
+    // เรียกใช้ครั้งแรกเมื่อโหลดหน้า
+    fetchData();
   </script>
   
   <!-- ======= Header ======= -->

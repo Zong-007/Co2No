@@ -30,21 +30,12 @@ if ($result->num_rows > 0) {
     $data['Co2'] = $row['Co2'];
     $data['Tvoc'] = $row['Tvoc'];
     $data['Date'] = $row['day']; // วันที่ (เปลี่ยนจาก 'DATE' เป็น 'day')
-    // ส่งข้อมูลกลับไปยังฝั่ง client
-    echo "Co2: " . htmlspecialchars($data['Co2']) . "<br>";
-    echo "Tvoc: " . htmlspecialchars($data['Tvoc']) . "<br>";
-    echo "วันที่: " . htmlspecialchars($data['Date']) . "<br>";
+    // ส่งข้อมูลกลับไปยังฝั่ง client ในรูปแบบ JSON
+    echo json_encode($data);
 } else {
-    echo "ไม่พบข้อมูลในตาราง co2no_data สำหรับวันนี้";
+    echo json_encode(array("error" => "ไม่พบข้อมูลในตาราง co2no_data สำหรับวันนี้"));
 }
 
 // ปิดการเชื่อมต่อฐานข้อมูล
 $conn->close();
-
-// ใช้ตัวแปร $data เพื่อนำไปแสดงผลในหน้าเว็บ
-//if (!empty($data)) {
-    //echo "Co2 (ล่าสุด): " . htmlspecialchars($data['Co2']) . "<br>";
-    //echo "Tvoc (ล่าสุด): " . htmlspecialchars($data['Tvoc']) . "<br>";
-    //echo "วันที่: " . htmlspecialchars($data['Date']) . "<br>"; // แสดงวันที่
-//}
 ?>
