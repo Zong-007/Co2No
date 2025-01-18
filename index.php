@@ -92,11 +92,8 @@
   
                         
                         <div class="ps-3 card-title-wrapper end">
-                            <div class="ps-3 card-title-wrapper span text-V">45</div>
-                            <div class="ps-3 card-title-wrapper span text-normal ">
-                                <div class="status-box">
-                                    Normal
-                                </div>
+                            <div class="ps-3 card-title-wrapper span text-V">
+                              <p>Co2: <?php echo htmlspecialchars($row['Co2']); ?></p>
                             </div>
                         </div>
                     </div>
@@ -118,7 +115,9 @@
   
                         
                         <div class="ps-3 card-title-wrapper end">
-                            <div class="ps-3 card-title-wrapper span text-V">45</div>
+                            <div class="ps-3 card-title-wrapper span text-V">
+                              <p>Co2: <?php echo htmlspecialchars($row['Tvoc']); ?></p>
+                            </div>
                             
                         </div>
                     </div>
