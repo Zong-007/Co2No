@@ -3,7 +3,7 @@
 
 <?php
 // ดึงข้อมูลจากไฟล์ db_fetch.php
-include 'connect.php';
+include 'sent_data/connect.php';
 
 // แสดง Popup
 echo "<script>alert('เชื่อมต่อสำเร็จ!');</script>";
