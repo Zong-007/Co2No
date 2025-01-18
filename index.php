@@ -53,18 +53,21 @@
         success: function(response) {
           // ตรวจสอบว่ามีข้อมูลหรือไม่
           if (response.error) {
-            $('#data').html(response.error); // ถ้ามีข้อผิดพลาดแสดงข้อความข้อผิดพลาด
+            $('#Co2').html("ข้อผิดพลาด: " + response.error);
+            $('#Tvoc').html("");
+            $('#Date').html("");
           } else {
-            // ถ้ามีข้อมูล, แสดงผล
-            $('#data').html(
-              "Co2: " + response.Co2 + "<br>" +
-              "Tvoc: " + response.Tvoc + "<br>" +
-              "วันที่: " + response.Date + "<br>"
-            );
+            // ถ้ามีข้อมูล, อัปเดตข้อมูลทีละตัว
+            $('#Co2').html("Co2: " + response.Co2);
+            $('#Tvoc').html("Tvoc: " + response.Tvoc);
+            $('#Date').html("วันที่: " + response.Date);
           }
         },
         error: function() {
-          $('#data').html("เกิดข้อผิดพลาดในการดึงข้อมูล");
+          // หากเกิดข้อผิดพลาดในการเชื่อมต่อ
+          $('#Co2').html("เกิดข้อผิดพลาดในการดึงข้อมูล");
+          $('#Tvoc').html("");
+          $('#Date').html("");
         }
       });
     }
@@ -75,6 +78,7 @@
     // เรียกใช้ครั้งแรกเมื่อโหลดหน้า
     fetchData();
   </script>
+
   
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -120,7 +124,9 @@
   
                         
                         <div class="ps-3 card-title-wrapper end">
-                            <div id="Co2" class="ps-3 card-title-wrapper span text-V"></div>
+                            <div class="ps-3 card-title-wrapper span text-V">
+                            <div id="Co2">Co2: กำลังโหลด...</div>
+                            </div>
                         </div>
                     </div>
                 </div>

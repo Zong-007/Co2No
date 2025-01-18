@@ -1,41 +1,32 @@
 <?php
-// ข้อมูลการเชื่อมต่อฐานข้อมูล
-$host = "irkm0xtlo2pcmvvz.chr7pe7iynqr.eu-west-1.rds.amazonaws.com"; // MySQL Hostname
-$username = "atr8951bo6cc30cs"; // MySQL Username
-$password = "qs7uojv84spfdsv6"; // MySQL Password
-$dbname = "g01br52t9mmmpfah"; // ชื่อฐานข้อมูล
-$port = 3306; // MySQL Port (ค่าเริ่มต้นคือ 3306)
+header('Content-Type: application/json'); // กำหนด Content-Type เป็น JSON
 
-// สร้างการเชื่อมต่อ
+$host = "irkm0xtlo2pcmvvz.chr7pe7iynqr.eu-west-1.rds.amazonaws.com"; 
+$username = "atr8951bo6cc30cs";
+$password = "qs7uojv84spfdsv6";
+$dbname = "g01br52t9mmmpfah";
+$port = 3306;
+
 $conn = new mysqli($host, $username, $password, $dbname, $port);
 
-// ตรวจสอบการเชื่อมต่อ
 if ($conn->connect_error) {
-    die("การเชื่อมต่อฐานข้อมูลล้มเหลว: " . $conn->connect_error);
+    echo json_encode(["error" => "การเชื่อมต่อฐานข้อมูลล้มเหลว"]);
+    exit();
 }
 
-// สร้างคำสั่ง SQL เพื่อดึงข้อมูลแถวที่มี ID ล่าสุด โดยใช้คอลัมน์ 'day'
 $sql = "SELECT Co2, Tvoc, `day` FROM co2no_data WHERE DATE(`day`) = CURDATE() ORDER BY ID DESC LIMIT 1";
-
-// ส่งคำสั่ง SQL ไปยังฐานข้อมูล
 $result = $conn->query($sql);
 
-// ตัวแปรสำหรับเก็บข้อมูล
-$data = array();
-
-// ตรวจสอบว่ามีข้อมูลที่ดึงมาได้หรือไม่
 if ($result->num_rows > 0) {
-    // ดึงข้อมูลแถวที่มี ID ล่าสุด
     $row = $result->fetch_assoc();
-    $data['Co2'] = $row['Co2'];
-    $data['Tvoc'] = $row['Tvoc'];
-    $data['Date'] = $row['day']; // วันที่ (เปลี่ยนจาก 'DATE' เป็น 'day')
-    // ส่งข้อมูลกลับไปยังฝั่ง client ในรูปแบบ JSON
-    echo json_encode($data);
+    echo json_encode([
+        "Co2" => $row['Co2'],
+        "Tvoc" => $row['Tvoc'],
+        "Date" => $row['day']
+    ]);
 } else {
-    echo json_encode(array("error" => "ไม่พบข้อมูลในตาราง co2no_data สำหรับวันนี้"));
+    echo json_encode(["error" => "ไม่พบข้อมูลในตาราง co2no_data สำหรับวันนี้"]);
 }
 
-// ปิดการเชื่อมต่อฐานข้อมูล
 $conn->close();
 ?>
