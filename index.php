@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php
+// ดึงข้อมูลจากไฟล์ db_fetch.php
+include 'connect.php';
+
+// แสดง Popup
+echo "<script>alert('เชื่อมต่อสำเร็จ!');</script>";
+?>
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -49,13 +57,6 @@
         <img src="assets/img/1.png" alt="OXY_logo" >
       </a>
     </div><!-- End Logo -->
-    
-    <?php
-      include 'connect.php';
-
-      // แสดง Popup
-      echo "<script>alert('เชื่อมต่อสำเร็จ!');</script>";
-    ?>
     
     <nav class="header-nav ms-auto">
 
