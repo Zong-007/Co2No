@@ -28,7 +28,7 @@ if (!$output) {
 fputcsv($output, array('Co2', 'Tvoc', 'day')); // เปลี่ยนชื่อคอลัมน์ตามฐานข้อมูลของคุณ
 
 // ดึงข้อมูลจากฐานข้อมูล
-$sql = "SELECT Co2, Tvoc, day, Status FROM co2no_data"; // แก้ไขตามตารางในฐานข้อมูลของคุณ
+$sql = "SELECT Co2, Tvoc, day FROM co2no_data"; // แก้ไขตามตารางในฐานข้อมูลของคุณ
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
