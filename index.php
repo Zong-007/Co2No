@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php
+// ดึงข้อมูลจากไฟล์ db_fetch.php
+include 'connect.php';
 
+// แสดง Popup
+echo "<script>alert('เชื่อมต่อสำเร็จ!');</script>";
+?>
 
 <head>
   <meta charset="utf-8">
@@ -39,51 +45,6 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
   <link rel="stylesheet" href="styles1.css">
-
-  <?php
-// ข้อมูลการเชื่อมต่อฐานข้อมูล
-$host = "irkm0xtlo2pcmvvz.chr7pe7iynqr.eu-west-1.rds.amazonaws.com"; // MySQL Hostname
-$username = "atr8951bo6cc30cs"; // MySQL Username
-$password = "qs7uojv84spfdsv6"; // MySQL Password
-$dbname = "g01br52t9mmmpfah"; // ชื่อฐานข้อมูล
-$port = 3306; // MySQL Port (ค่าเริ่มต้นคือ 3306)
-
-// สร้างการเชื่อมต่อ
-$conn = new mysqli($host, $username, $password, $dbname, $port);
-
-// ตรวจสอบการเชื่อมต่อ
-if ($conn->connect_error) {
-    die("การเชื่อมต่อฐานข้อมูลล้มเหลว: " . $conn->connect_error);
-}
-
-// สร้างคำสั่ง SQL เพื่อดึงข้อมูลเฉพาะวันที่ปัจจุบัน
-$sql = "SELECT Co2, Tvoc FROM co2no_data WHERE DATE = CURDATE()";
-
-// ส่งคำสั่ง SQL ไปยังฐานข้อมูล
-$result = $conn->query($sql);
-
-// ตัวแปรสำหรับเก็บข้อมูล
-$data = array();
-
-// ตรวจสอบว่ามีข้อมูลที่ดึงมาได้หรือไม่
-if ($result->num_rows > 0) {
-    // เก็บข้อมูลในตัวแปร $data
-    while ($row = $result->fetch_assoc()) {
-        $data[] = array(
-            'Co2' => $row['Co2'],
-            'Tvoc' => $row['Tvoc']
-        );
-    }
-} else {
-    echo "ไม่พบข้อมูลในตาราง co2no_data สำหรับวันนี้";
-}
-
-// ปิดการเชื่อมต่อฐานข้อมูล
-$conn->close();
-
-// ใช้ตัวแปร $data เพื่อนำไปแสดงผลในหน้าเว็บ
-?>
-
 </head>
 
 <body>
@@ -133,7 +94,7 @@ $conn->close();
                         
                         <div class="ps-3 card-title-wrapper end">
                             <div class="ps-3 card-title-wrapper span text-V">
-                              <p>Co2: <?php echo htmlspecialchars($row['Co2']); ?></p>
+                              <?php echo htmlspecialchars($row['Co2'] + 0); ?>
                             </div>
                         </div>
                     </div>
@@ -156,7 +117,7 @@ $conn->close();
                         
                         <div class="ps-3 card-title-wrapper end">
                             <div class="ps-3 card-title-wrapper span text-V">
-                              <p>Co2: <?php echo htmlspecialchars($row['Tvoc']); ?></p>
+                            <?php echo htmlspecialchars($row['Tvoc'] + 0); ?>
                             </div>
                             
                         </div>

@@ -14,8 +14,8 @@ if ($conn->connect_error) {
     die("การเชื่อมต่อฐานข้อมูลล้มเหลว: " . $conn->connect_error);
 }
 
-// สร้างคำสั่ง SQL เพื่อดึงข้อมูลเฉพาะวันที่ปัจจุบัน
-$sql = "SELECT Co2, Tvoc FROM co2no_data WHERE DATE(created_at) = CURDATE()";
+// สร้างคำสั่ง SQL เพื่อดึงข้อมูลแถวที่มี ID ล่าสุด
+$sql = "SELECT Co2, Tvoc, DATE(created_at) AS date_only FROM co2no_data WHERE DATE = CURDATE() ORDER BY ID DESC LIMIT 1";
 
 // ส่งคำสั่ง SQL ไปยังฐานข้อมูล
 $result = $conn->query($sql);
@@ -25,13 +25,11 @@ $data = array();
 
 // ตรวจสอบว่ามีข้อมูลที่ดึงมาได้หรือไม่
 if ($result->num_rows > 0) {
-    // เก็บข้อมูลในตัวแปร $data
-    while ($row = $result->fetch_assoc()) {
-        $data[] = array(
-            'Co2' => $row['Co2'],
-            'Tvoc' => $row['Tvoc']
-        );
-    }
+    // ดึงข้อมูลแถวที่มี ID ล่าสุด
+    $row = $result->fetch_assoc();
+    $data['Co2'] = $row['Co2'];
+    $data['Tvoc'] = $row['Tvoc'];
+    $data['Date'] = $row['date_only']; // วันที่
 } else {
     echo "ไม่พบข้อมูลในตาราง co2no_data สำหรับวันนี้";
 }
@@ -40,4 +38,9 @@ if ($result->num_rows > 0) {
 $conn->close();
 
 // ใช้ตัวแปร $data เพื่อนำไปแสดงผลในหน้าเว็บ
+if (!empty($data)) {
+    echo "Co2 (ล่าสุด): " . htmlspecialchars($data['Co2']) . "<br>";
+    echo "Tvoc (ล่าสุด): " . htmlspecialchars($data['Tvoc']) . "<br>";
+    echo "วันที่: " . htmlspecialchars($data['Date']) . "<br>"; // แสดงวันที่
+}
 ?>
