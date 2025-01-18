@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 }
 
 // สร้างคำสั่ง SQL เพื่อดึงข้อมูลแถวที่มี ID ล่าสุด
-$sql = "SELECT Co2, Tvoc, DATE FROM co2no_data WHERE DATE = CURDATE() ORDER BY ID DESC LIMIT 1";
+$sql = "SELECT Co2, Tvoc, `DATE` FROM co2no_data WHERE `DATE` = CURDATE() ORDER BY ID DESC LIMIT 1";
 
 // ส่งคำสั่ง SQL ไปยังฐานข้อมูล
 $result = $conn->query($sql);
@@ -29,7 +29,7 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $data['Co2'] = $row['Co2'];
     $data['Tvoc'] = $row['Tvoc'];
-    $data['Date'] = $row['date_only']; // วันที่
+    $data['Date'] = $row['DATE']; // วันที่
 } else {
     echo "ไม่พบข้อมูลในตาราง co2no_data สำหรับวันนี้";
 }
