@@ -26,7 +26,7 @@ if (isset($_GET['Co2']) && isset($_GET['Tvoc'])) {
     // ตรวจสอบว่าค่าเป็นตัวเลข
     if (is_numeric($co2) && is_numeric($tvoc)) {
         // ใช้ prepared statement
-        $stmt = $conn->prepare("INSERT INTO co2no_data (Co2, Tvoc, DATE) VALUES (?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO co2no_data (Co2, Tvoc, day) VALUES (?, ?, ?)");
         $stmt->bind_param("iis", $co2, $tvoc, $timestamp);
 
         // ดำเนินการเพิ่มข้อมูล
