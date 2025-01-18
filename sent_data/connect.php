@@ -14,8 +14,8 @@ if ($conn->connect_error) {
     die("การเชื่อมต่อฐานข้อมูลล้มเหลว: " . $conn->connect_error);
 }
 
-// สร้างคำสั่ง SQL เพื่อดึงข้อมูลแถวที่มี ID ล่าสุด
-$sql = "SELECT Co2, Tvoc, `DATE` FROM co2no_data WHERE `DATE` = CURDATE() ORDER BY ID DESC LIMIT 1";
+// สร้างคำสั่ง SQL เพื่อดึงข้อมูลแถวที่มี ID ล่าสุด โดยใช้คอลัมน์ 'day'
+$sql = "SELECT Co2, Tvoc, `day` FROM co2no_data WHERE `day` = CURDATE() ORDER BY ID DESC LIMIT 1";
 
 // ส่งคำสั่ง SQL ไปยังฐานข้อมูล
 $result = $conn->query($sql);
@@ -29,7 +29,7 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $data['Co2'] = $row['Co2'];
     $data['Tvoc'] = $row['Tvoc'];
-    $data['Date'] = $row['DATE']; // วันที่
+    $data['Date'] = $row['day']; // วันที่ (เปลี่ยนจาก 'DATE' เป็น 'day')
 } else {
     echo "ไม่พบข้อมูลในตาราง co2no_data สำหรับวันนี้";
 }
