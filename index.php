@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php
-// ดึงข้อมูลจากไฟล์ db_fetch.php
-include 'sent_data/connect.php';
-
-// แสดง Popup
-echo "<script>alert('เชื่อมต่อสำเร็จ!');</script>";
-?>
-
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -48,6 +40,25 @@ echo "<script>alert('เชื่อมต่อสำเร็จ!');</script>"
 </head>
 
 <body>
+
+  <script>
+    // ฟังก์ชันที่จะดึงข้อมูลจากฐานข้อมูลทุกๆ 5 วินาที
+    function fetchData() {
+      $.ajax({
+        url: 'sent_data/connect.php', // ไฟล์ PHP ที่ดึงข้อมูลจากฐานข้อมูล
+        method: 'GET',
+        success: function(response) {
+          $('#data').html(response); // อัพเดตข้อมูลใน div ที่ id="data"
+          }
+        });
+      }
+
+      // เรียกใช้ฟังก์ชันทุกๆ 5 วินาที
+      setInterval(fetchData, 5000); // 5000 มิลลิวินาที = 5 วินาที
+
+      // เรียกใช้ครั้งแรกเมื่อโหลดหน้า
+      fetchData();
+  </script>
   
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
