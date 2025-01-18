@@ -58,9 +58,9 @@
             $('#Date').html("");
           } else {
             // ถ้ามีข้อมูล, อัปเดตข้อมูลทีละตัว
-            $('#Co2').html("Co2: " + response.Co2);
-            $('#Tvoc').html("Tvoc: " + response.Tvoc);
-            $('#Date').html("วันที่: " + response.Date);
+            $('#Co2').html(response.Co2);
+            $('#Tvoc').html(response.Tvoc);
+            $('#Date').html(response.Date);
           }
         },
         error: function() {
@@ -125,7 +125,7 @@
                         
                         <div class="ps-3 card-title-wrapper end">
                             <div class="ps-3 card-title-wrapper span text-V">
-                            <div id="Co2">Co2: กำลังโหลด...</div>
+                            <div id="Co2"></div>
                             </div>
                         </div>
                     </div>
