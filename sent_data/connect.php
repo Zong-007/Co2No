@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 }
 
 // สร้างคำสั่ง SQL เพื่อดึงข้อมูลแถวที่มี ID ล่าสุด
-$sql = "SELECT Co2, Tvoc, DATE(created_at) AS date_only FROM co2no_data WHERE DATE = CURDATE() ORDER BY ID DESC LIMIT 1";
+$sql = "SELECT Co2, Tvoc, DATE FROM co2no_data WHERE DATE = CURDATE() ORDER BY ID DESC LIMIT 1";
 
 // ส่งคำสั่ง SQL ไปยังฐานข้อมูล
 $result = $conn->query($sql);
