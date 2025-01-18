@@ -38,9 +38,9 @@ if ($result->num_rows > 0) {
 $conn->close();
 
 // ใช้ตัวแปร $data เพื่อนำไปแสดงผลในหน้าเว็บ
-if (!empty($data)) {
-    echo "Co2 (ล่าสุด): " . htmlspecialchars($data['Co2']) . "<br>";
-    echo "Tvoc (ล่าสุด): " . htmlspecialchars($data['Tvoc']) . "<br>";
-    echo "วันที่: " . htmlspecialchars($data['Date']) . "<br>"; // แสดงวันที่
-}
+//if (!empty($data)) {
+    //echo "Co2 (ล่าสุด): " . htmlspecialchars($data['Co2']) . "<br>";
+    //echo "Tvoc (ล่าสุด): " . htmlspecialchars($data['Tvoc']) . "<br>";
+    //echo "วันที่: " . htmlspecialchars($data['Date']) . "<br>"; // แสดงวันที่
+//}
 ?>
