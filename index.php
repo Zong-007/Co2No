@@ -43,34 +43,78 @@
 
 <body>
 
-  <script>
+<script>
     // ฟังก์ชันที่จะดึงข้อมูลจากฐานข้อมูลทุกๆ 5 วินาที
     function fetchData() {
-      $.ajax({
-        url: 'sent_data/connect.php', // ไฟล์ PHP ที่ดึงข้อมูลจากฐานข้อมูล
-        method: 'GET',
-        dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
-        success: function(response) {
-          // ตรวจสอบว่ามีข้อมูลหรือไม่
-          if (response.error) {
-              // ถ้ามีข้อผิดพลาดในข้อมูล
-              $('#Co2').html(0); // แสดง 0 หากไม่มี Co2
-              $('#Tvoc').html(0); // แสดง 0 หากไม่มี Tvoc
-              $('#Date').html(0); // แสดง 0 หากไม่มี Date
-          } else {
-              // ถ้ามีข้อมูล, อัปเดตข้อมูลทีละตัว
-              $('#Co2').html(response.Co2 || 0); // ถ้าไม่มี Co2 ให้แสดงเป็น 0
-              $('#Tvoc').html(response.Tvoc || 0); // ถ้าไม่มี Tvoc ให้แสดงเป็น 0
-              $('#Date').html(response.Date || 0); // ถ้าไม่มี Date ให้แสดงเป็น 0
-          }
-        },
-        error: function() {
-          // หากเกิดข้อผิดพลาดในการเชื่อมต่อ
-          $('#Co2').html("เกิดข้อผิดพลาดในการดึงข้อมูล");
-          $('#Tvoc').html("");
-          $('#Date').html("");
+        $.ajax({
+            url: 'sent_data/connect.php', // ไฟล์ PHP ที่ดึงข้อมูลจากฐานข้อมูล
+            method: 'GET',
+            dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+            success: function(response) {
+                // ตรวจสอบว่ามีข้อมูลหรือไม่
+                if (response.error) {
+                    // ถ้ามีข้อผิดพลาดในข้อมูล
+                    $('#Co2').html(0); // แสดง 0 หากไม่มี Co2
+                    $('#Tvoc').html(0); // แสดง 0 หากไม่มี Tvoc
+                    $('#Date').html(0); // แสดง 0 หากไม่มี Date
+                } else {
+                    // ถ้ามีข้อมูล, อัปเดตข้อมูลทีละตัว
+                    $('#Co2').html(response.Co2 || 0); // ถ้าไม่มี Co2 ให้แสดงเป็น 0
+                    $('#Tvoc').html(response.Tvoc || 0); // ถ้าไม่มี Tvoc ให้แสดงเป็น 0
+                    $('#Date').html(response.Date || 0); // ถ้าไม่มี Date ให้แสดงเป็น 0
+
+                    // เรียกฟังก์ชันการเปลี่ยนสีหลังจากอัปเดตข้อมูล
+                    changeTextColor(response.Co2, response.Tvoc);
+                }
+            },
+            error: function() {
+                // หากเกิดข้อผิดพลาดในการเชื่อมต่อ
+                $('#Co2').html("เกิดข้อผิดพลาดในการดึงข้อมูล");
+                $('#Tvoc').html("");
+                $('#Date').html("");
+            }
+        });
+    }
+
+    // ฟังก์ชันในการเปลี่ยนสีข้อความตามค่า Co2 และ Tvoc
+    function changeTextColor(Co2, Tvoc) {
+        // แปลงค่าจาก Co2 เป็นตัวเลข
+        var co2ValueNum = parseInt(Co2); // แปลงค่าเป็นตัวเลข
+        if (isNaN(co2ValueNum)) return; // ตรวจสอบว่าเป็นตัวเลขไหม
+
+        // เปลี่ยนสีข้อความตามค่า Co2
+        if (co2ValueNum < 50) {
+            $('#Co2').css("color", "cyan"); // ST77XX_CYAN
+        } else if (co2ValueNum < 150) {
+            $('#Co2').css("color", "blue"); // ST77XX_BLUE
+        } else if (co2ValueNum < 300) {
+            $('#Co2').css("color", "magenta"); // ST77XX_MAGENTA
+        } else if (co2ValueNum < 500) {
+            $('#Co2').css("color", "yellow"); // ST77XX_YELLOW
+        } else if (co2ValueNum < 1200) {
+            $('#Co2').css("color", "orange"); // ST77XX_ORANGE
+        } else {
+            $('#Co2').css("color", "red"); // ST77XX_RED
         }
-      });
+
+        // แปลงค่าจาก Tvoc เป็นตัวเลข
+        var tvocValueNum = parseInt(Tvoc); // แปลงค่าเป็นตัวเลข
+        if (isNaN(tvocValueNum)) return; // ตรวจสอบว่าเป็นตัวเลขไหม
+
+        // เปลี่ยนสีข้อความตามค่า Tvoc
+        if (tvocValueNum < 50) {
+            $('#Tvoc').css("color", "cyan"); // ST77XX_CYAN
+        } else if (tvocValueNum < 150) {
+            $('#Tvoc').css("color", "blue"); // ST77XX_BLUE
+        } else if (tvocValueNum < 300) {
+            $('#Tvoc').css("color", "magenta"); // ST77XX_MAGENTA
+        } else if (tvocValueNum < 500) {
+            $('#Tvoc').css("color", "yellow"); // ST77XX_YELLOW
+        } else if (tvocValueNum < 1200) {
+            $('#Tvoc').css("color", "orange"); // ST77XX_ORANGE
+        } else {
+            $('#Tvoc').css("color", "red"); // ST77XX_RED
+        }
     }
 
     // เรียกใช้ฟังก์ชันทุกๆ 5 วินาที
@@ -78,8 +122,7 @@
 
     // เรียกใช้ครั้งแรกเมื่อโหลดหน้า
     fetchData();
-  </script>
-
+</script>
   
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
