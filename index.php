@@ -53,14 +53,15 @@
         success: function(response) {
           // ตรวจสอบว่ามีข้อมูลหรือไม่
           if (response.error) {
-            $('#Co2').html(response.error);
-            $('#Tvoc').html(response.Tvoc+0);
-            $('#Date').html("");
+              // ถ้ามีข้อผิดพลาดในข้อมูล
+              $('#Co2').html(0); // แสดง 0 หากไม่มี Co2
+              $('#Tvoc').html(0); // แสดง 0 หากไม่มี Tvoc
+              $('#Date').html(0); // แสดง 0 หากไม่มี Date
           } else {
-            // ถ้ามีข้อมูล, อัปเดตข้อมูลทีละตัว
-            $('#Co2').html(response.Co2);
-            $('#Tvoc').html(response.Tvoc);
-            $('#Date').html(response.Date);
+              // ถ้ามีข้อมูล, อัปเดตข้อมูลทีละตัว
+              $('#Co2').html(response.Co2 || 0); // ถ้าไม่มี Co2 ให้แสดงเป็น 0
+              $('#Tvoc').html(response.Tvoc || 0); // ถ้าไม่มี Tvoc ให้แสดงเป็น 0
+              $('#Date').html(response.Date || 0); // ถ้าไม่มี Date ให้แสดงเป็น 0
           }
         },
         error: function() {
