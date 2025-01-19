@@ -83,18 +83,16 @@
         if (isNaN(co2ValueNum)) return; // ตรวจสอบว่าเป็นตัวเลขไหม
 
         // เปลี่ยนสีข้อความตามค่า Co2
-        if (co2ValueNum < 50) {
-            $('#Co2').css("color", "cyan"); // ST77XX_CYAN
-        } else if (co2ValueNum < 150) {
-            $('#Co2').css("color", "blue"); // ST77XX_BLUE
-        } else if (co2ValueNum < 300) {
-            $('#Co2').css("color", "magenta"); // ST77XX_MAGENTA
-        } else if (co2ValueNum < 500) {
-            $('#Co2').css("color", "yellow"); // ST77XX_YELLOW
-        } else if (co2ValueNum < 1200) {
-            $('#Co2').css("color", "orange"); // ST77XX_ORANGE
+        if (co2ValueNum < 400) {
+            $('#Co2').css("color", "#00bf62"); // ST77XX_CYAN
+        } else if (co2ValueNum < 1000) {
+            $('#Co2').css("color", "#7fd959"); // ST77XX_BLUE
+        } else if (co2ValueNum < 2000) {
+            $('#Co2').css("color", "#ffdf58"); // ST77XX_MAGENTA
+        } else if (co2ValueNum < 5000) {
+            $('#Co2').css("color", "#febd57"); // ST77XX_YELLOW
         } else {
-            $('#Co2').css("color", "red"); // ST77XX_RED
+            $('#Co2').css("color", "#fe5759"); // ST77XX_RED
         }
 
         // แปลงค่าจาก Tvoc เป็นตัวเลข
@@ -102,18 +100,18 @@
         if (isNaN(tvocValueNum)) return; // ตรวจสอบว่าเป็นตัวเลขไหม
 
         // เปลี่ยนสีข้อความตามค่า Tvoc
-        if (tvocValueNum < 50) {
-            $('#Tvoc').css("color", "cyan"); // ST77XX_CYAN
-        } else if (tvocValueNum < 150) {
-            $('#Tvoc').css("color", "blue"); // ST77XX_BLUE
-        } else if (tvocValueNum < 300) {
-            $('#Tvoc').css("color", "magenta"); // ST77XX_MAGENTA
-        } else if (tvocValueNum < 500) {
-            $('#Tvoc').css("color", "yellow"); // ST77XX_YELLOW
-        } else if (tvocValueNum < 1200) {
-            $('#Tvoc').css("color", "orange"); // ST77XX_ORANGE
+        if (tvocValueNum < 220) {
+            $('#Tvoc').css("color", "#51a46c"); // ST77XX_CYAN
+        } else if (tvocValueNum < 660) {
+            $('#Tvoc').css("color", "#f3cd51"); // ST77XX_BLUE
+        } else if (tvocValueNum < 1430) {
+            $('#Tvoc').css("color", "#ec9f67"); // ST77XX_MAGENTA
+        } else if (tvocValueNum < 2200) {
+            $('#Tvoc').css("color", "#ff544d"); // ST77XX_YELLOW
+        } else if (tvocValueNum < 3300) {
+            $('#Tvoc').css("color", "#7f47f2"); // ST77XX_ORANGE
         } else {
-            $('#Tvoc').css("color", "red"); // ST77XX_RED
+            $('#Tvoc').css("color", "#753885"); // ST77XX_RED
         }
     }
 
