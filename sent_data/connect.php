@@ -25,7 +25,7 @@ if ($result->num_rows > 0) {
         "Date" => $row['day']
     ]);
 } else {
-    echo json_encode(["error" => "ไม่พบข้อมูลในตาราง co2no_data สำหรับวันนี้"]);
+    echo json_encode(["error" => "0"]);
 }
 
 $conn->close();
