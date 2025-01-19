@@ -54,7 +54,7 @@
           // ตรวจสอบว่ามีข้อมูลหรือไม่
           if (response.error) {
             $('#Co2').html(response.error);
-            $('#Tvoc').html("");
+            $('#Tvoc').html(response.Tvoc+0);
             $('#Date').html("");
           } else {
             // ถ้ามีข้อมูล, อัปเดตข้อมูลทีละตัว
