@@ -53,7 +53,7 @@
         success: function(response) {
           // ตรวจสอบว่ามีข้อมูลหรือไม่
           if (response.error) {
-            $('#Co2').html("ข้อผิดพลาด: " + response.error);
+            $('#Co2').html(response.error);
             $('#Tvoc').html("");
             $('#Date').html("");
           } else {
