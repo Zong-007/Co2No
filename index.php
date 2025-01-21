@@ -211,64 +211,144 @@
                   
                   <!-- Export Data -->
                   <form action="export.php" method="post" class="form-right" >
-                    <button class="button" type="submit">Export Data</button>
+                    <button class="button" type="submit">
+                      <img src="assets/img/download.png" alt="Export Data" style="width: 40px; height: 40px;">
+                    </button>
                   </form>
 
                   <!-- Line Chart -->
                   <div id="reportsChart"></div>
 
                   <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                      new ApexCharts(document.querySelector("#reportsChart"), {
-                        series: [{
-                          name: 'Sales',
-                          data: [31, 40, 28, 51, 42, 82, 56],
-                        }, {
-                          name: 'Revenue',
-                          data: [11, 32, 45, 32, 34, 52, 41]
-                        }, {
-                          name: 'Customers',
-                          data: [15, 11, 32, 18, 9, 24, 11]
-                        }],
-                        chart: {
-                          height: 350,
-                          type: 'area',
-                          toolbar: {
-                            show: false
-                          },
-                        },
-                        markers: {
-                          size: 4
-                        },
-                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                        fill: {
-                          type: "gradient",
-                          gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.3,
-                            opacityTo: 0.4,
-                            stops: [0, 90, 100]
-                          }
-                        },
-                        dataLabels: {
-                          enabled: false
-                        },
-                        stroke: {
-                          curve: 'smooth',
-                          width: 2
-                        },
-                        xaxis: {
-                          type: 'datetime',
-                          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-                        },
-                        tooltip: {
-                          x: {
-                            format: 'dd/MM/yy HH:mm'
-                          },
+                    var chart;  // ตัวแปรสำหรับเก็บกราฟ
+
+                    // ฟังก์ชันที่จะดึงข้อมูลจากฐานข้อมูลทุกๆ 5 วินาที
+                    function fetchData() {
+                        $.ajax({
+                            url: 'sent_data/line_chart.php', // ไฟล์ PHP ที่ดึงข้อมูลจากฐานข้อมูล
+                            method: 'GET',
+                            dataType: 'json', // กำหนดให้รับข้อมูลในรูปแบบ JSON
+                            success: function(response) {
+                                // ตรวจสอบว่ามีข้อมูลหรือไม่
+                                if (response.error) {
+                                    // ถ้ามีข้อผิดพลาด
+                                    $('#Co2_G').html(0); // แสดง 0 หากไม่มี Co2
+                                    $('#Hour').html(0); // แสดง 0 หากไม่มี Hour
+                                } else {
+                                    // ถ้ามีข้อมูล, อัปเดตข้อมูลทีละตัว
+                                    $('#Co2_G').html(response.last_24_hours[0].Co2_G || 0); // แสดงค่า Co2 ของชั่วโมงล่าสุด
+                                    $('#Hour').html(response.last_24_hours[0].hour || 0); // แสดงชั่วโมงของข้อมูลล่าสุด
+
+                                    if (chart) {  // ตรวจสอบว่า chart ถูกสร้างหรือยัง
+                                        // เรียกฟังก์ชันการอัปเดตกราฟ
+                                        updateChart(response.last_24_hours);
+                                    } else {
+                                        // สร้างกราฟใหม่
+                                        createChart(response.last_24_hours);
+                                    }
+                                }
+                            },
+                            error: function() {
+                                // หากเกิดข้อผิดพลาดในการเชื่อมต่อ
+                                $('#Co2_G').html("เกิดข้อผิดพลาดในการดึงข้อมูล");
+                                $('#Hour').html("");
+                            }
+                        });
+                    }
+
+                    // ฟังก์ชันสร้างกราฟครั้งแรก
+                    function createChart(last_24_hours_data) {
+                        var labels = [];  // ชั่วโมง
+                        var co2Data = [];  // ค่า Co2
+
+                        // เตรียมข้อมูลจาก response
+                        last_24_hours_data.forEach(function(hourData) {
+                            labels.push(hourData.hour);  // ชั่วโมง
+                            co2Data.push(hourData.Co2_G);  // ค่า Co2
+                        });
+
+                        // กำหนดค่า options สำหรับกราฟ
+                        var options = {
+                            series: [{
+                                name: 'Co2',
+                                data: co2Data,  // ใช้ค่า Co2 จากข้อมูล
+                            }],
+                            chart: {
+                                height: 350,
+                                type: 'area',
+                                toolbar: {
+                                    show: false
+                                },
+                            },
+                            markers: {
+                                size: 4
+                            },
+                            colors: ['#3eff6e'],
+                            fill: {
+                                type: "gradient",
+                                gradient: {
+                                    shadeIntensity: 1,
+                                    opacityFrom: 0.3,
+                                    opacityTo: 0.4,
+                                    stops: [0, 90, 100]
+                                }
+                            },
+                            dataLabels: {
+                                enabled: false
+                            },
+                            stroke: {
+                                curve: 'smooth',
+                                width: 2
+                            },
+                            xaxis: {
+                                type: 'category',
+                                categories: labels,  // ชั่วโมงที่ได้รับจากข้อมูล
+                            },
+                            tooltip: {
+                                x: {
+                                    format: 'HH:mm'
+                                },
+                            }
+                        };
+
+                        // สร้างกราฟใหม่และเก็บไว้ในตัวแปร chart
+                        chart = new ApexCharts(document.querySelector("#reportsChart"), options);
+                        chart.render();
+                    }
+
+                    // ฟังก์ชันอัปเดตกราฟ
+                    function updateChart(last_24_hours_data) {
+                        if (chart) {  // ตรวจสอบว่า chart ถูกสร้างหรือยัง
+                            var labels = [];  // ชั่วโมง
+                            var co2Data = [];  // ค่า Co2
+
+                            // เตรียมข้อมูลจาก response
+                            last_24_hours_data.forEach(function(hourData) {
+                                labels.push(hourData.hour);  // ชั่วโมง
+                                co2Data.push(hourData.Co2_G);  // ค่า Co2
+                            });
+
+                            // อัปเดตข้อมูลในกราฟที่มีอยู่
+                            chart.updateOptions({
+                                series: [{
+                                    name: 'Co2',
+                                    data: co2Data,  // ใช้ค่า Co2 จากข้อมูลใหม่
+                                }],
+                                xaxis: {
+                                    categories: labels,  // อัปเดตชั่วโมง
+                                }
+                            });
                         }
-                      }).render();
+                    }
+
+                    // เรียกฟังก์ชัน fetchData ทุก 5 วินาที
+                    setInterval(fetchData, 5000);  // ทุก 5 วินาที
+
+                    // สร้างกราฟครั้งแรกเมื่อโหลดหน้า
+                    $(document).ready(function() {
+                        fetchData();  // ดึงข้อมูลทันทีเมื่อโหลดหน้า
                     });
-                  </script>
+                </script>
                   <!-- End Line Chart -->
 
                 </div>
