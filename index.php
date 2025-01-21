@@ -257,12 +257,12 @@
                     }
 
                     // ฟังก์ชันสร้างกราฟครั้งแรก
-                    function createChart(last_24_hours_data) {
+                    function createChart(last_6_hours_data) {
                         var labels = [];  // ชั่วโมง
                         var co2Data = [];  // ค่า Co2
 
                         // เตรียมข้อมูลจาก response
-                        last_24_hours_data.forEach(function(hourData) {
+                        last_6_hours_data.forEach(function(hourData) {
                             labels.push(hourData.hour);  // ชั่วโมง
                             co2Data.push(hourData.Co2_G);  // ค่า Co2
                         });
@@ -317,13 +317,13 @@
                     }
 
                     // ฟังก์ชันอัปเดตกราฟ
-                    function updateChart(last_24_hours_data) {
+                    function updateChart(last_6_hours_data) {
                         if (chart) {  // ตรวจสอบว่า chart ถูกสร้างหรือยัง
                             var labels = [];  // ชั่วโมง
                             var co2Data = [];  // ค่า Co2
 
                             // เตรียมข้อมูลจาก response
-                            last_24_hours_data.forEach(function(hourData) {
+                            last_6_hours_data.forEach(function(hourData) {
                                 labels.push(hourData.hour);  // ชั่วโมง
                                 co2Data.push(hourData.Co2_G);  // ค่า Co2
                             });
