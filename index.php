@@ -236,15 +236,15 @@
                                     $('#Hour').html(0); // แสดง 0 หากไม่มี Hour
                                 } else {
                                     // ถ้ามีข้อมูล, อัปเดตข้อมูลทีละตัว
-                                    $('#Co2_G').html(response.last_24_hours[0].Co2_G || 0); // แสดงค่า Co2 ของชั่วโมงล่าสุด
-                                    $('#Hour').html(response.last_24_hours[0].hour || 0); // แสดงชั่วโมงของข้อมูลล่าสุด
+                                    $('#Co2_G').html(response.last_6_hours[0].Co2_G || 0); // แสดงค่า Co2 ของชั่วโมงล่าสุด
+                                    $('#Hour').html(response.last_6_hours[0].hour || 0); // แสดงชั่วโมงของข้อมูลล่าสุด
 
                                     if (chart) {  // ตรวจสอบว่า chart ถูกสร้างหรือยัง
                                         // เรียกฟังก์ชันการอัปเดตกราฟ
-                                        updateChart(response.last_24_hours);
+                                        updateChart(response.last_6_hours);
                                     } else {
                                         // สร้างกราฟใหม่
-                                        createChart(response.last_24_hours);
+                                        createChart(response.last_6_hours);
                                     }
                                 }
                             },
