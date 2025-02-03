@@ -160,7 +160,7 @@
                         <div class="card-title-wrapper">
                             <h5 class="card-title"> 
                                 <img src="assets/img/3.png" alt="SPO2 Logo" style="width: 50px; height: auto;">
-                                Co2
+                                CO2
                             </h5>
                         </div>
   
@@ -183,7 +183,7 @@
                         <div class="card-title-wrapper">
                             <h5 class="card-title"> 
                                 <img src="assets/img/2.png" alt="SPO2 Logo" style="width: 40px; height: auto;">
-                                Tvoc
+                                TVOC
                             </h5>
                         </div>
   
